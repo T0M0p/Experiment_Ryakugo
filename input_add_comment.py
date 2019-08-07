@@ -72,6 +72,48 @@ def conv_kana_to_vec(str_list,weight, TorR):
             output_vec.append(title_vec)
             return output_vec
 
+
+"""
+    def conv_kana_to_vec_type2(str_list, TorR):
+    output_vec = []
+    # for文で一文字づつ判定
+    for title in str_list:
+    title_vec = []
+    for char in title:
+    vowel_index = 0
+    consonant_index = 0
+    if char == u"ン":
+    consonant_index = 18
+    elif char == u"ー":
+    consonant_index = 19
+    elif char == u"ッ":
+    consonant_index = 20
+    elif char == u"ヴ":
+    consonant_index = 11
+    vowel_index = 3
+    else:
+    for i, kana_list in enumerate(kana_lists):
+    if char in kana_list:
+    index = kana_list.index(char)
+    consonant_index = i+1
+    vowel_index = index+1
+    break
+    title_vec.append(vowel_index)
+    title_vec.append(consonant_index)
+    if TorR=="T":
+    while len(title_vec) <= 35*2+1:
+    title_vec.append(0)
+    #タイトル群に追加
+    output_vec.append(title_vec)
+    elif TorR=="R":
+    while len(title_vec) <= 5*2+1:
+    title_vec.append(0)
+    #タイトル群に追加
+    output_vec.append(title_vec)
+    return output_vec
+    """
+
+
 def read_file(file):
     """
     csvファイルを読み込み
@@ -98,6 +140,23 @@ def conv_str_to_kana(str_list):
         kana_list.append(kana)
     
     return kana_list
+
+
+"""
+    def conv_vec_to_kana_type2(vec_list,weight):
+    kana_list = []
+    for vec_title in vec_list:
+    title = []
+    while len(vec_title) != 0 :
+    vec_char = vec_title[0:2]
+    del vec_title[0:2]
+    char = conv_vec_to_char_type2(vec_char,weight)
+    if char != "":
+    title.append(char)
+    kana_list.append(title)
+    return kana_list
+    """
+
 
 def conv_vec_to_kana(vec_list,weight):
     """
@@ -142,6 +201,24 @@ except ValueError:
     pass
     
     return char
+
+
+"""
+    def conv_vec_to_char_type2(vec_char, weight):
+    kana_lists_array = np.array(kana_lists)
+    vowel_index = vec_char[0]
+    consonant_index = vec_char[1]
+    char = ""
+    if consonant_index == 18 :
+    char = u"ン"
+    elif consonant_index == 19 :
+    char = u"ー"
+    elif consonant_index == 20 :
+    char = u"ッ"
+    else :
+    char = kana_lists_array[consonant_index-1,vowel_index-1]
+    return char
+    """
 
 
 def fix_data(title_list,ryaku_list):
